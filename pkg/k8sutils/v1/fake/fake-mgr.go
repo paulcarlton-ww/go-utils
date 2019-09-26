@@ -1,4 +1,3 @@
-// (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
 
 package fake
 
@@ -7,8 +6,8 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/tools/clientcmd"
 
-	"github.com/paulcarlton/go-utils/pkg/core"
-	"github.com/paulcarlton/go-utils/pkg/k8sutils/v1/k8s"
+	"github.com/paul-carlton/go-utils/pkg/core"
+	"github.com/paul-carlton/go-utils/pkg/k8sutils/v1/k8s"
 )
 
 // Fake is a structure that hold a fake kubernetes client and implements the K8sUtils interface

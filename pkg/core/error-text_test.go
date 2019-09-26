@@ -1,4 +1,3 @@
-// (c) Copyright 2019 Hewlett Packard Enterprise Development LP
 
 package core
 
@@ -6,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/paulcarlton/go-utils/pkg/testutils"
+	"github.com/paul-carlton/go-utils/pkg/testutils"
 )
 
 func TestErrorText(t *testing.T) {

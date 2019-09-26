@@ -1,4 +1,3 @@
-# (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
 
 include project-name.mk
 
@@ -41,7 +40,7 @@ NC:=\033[0m
 	clean-glide glide glide-update clean-${PROJECT}-check ${PROJECT}-check \
 	clean-shellcheck shellcheck docker-builder
 # Stop prints each line of the recipe.
-.SILENT:
+#.SILENT:
 
 # Allow secondary expansion of explicit rules.
 .SECONDEXPANSION: %.md  %-docker.tar

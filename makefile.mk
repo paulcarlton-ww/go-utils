@@ -1,5 +1,3 @@
-# (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
-
 # Makes a recipe passed to a single invocation of the shell.
 .ONESHELL:
 

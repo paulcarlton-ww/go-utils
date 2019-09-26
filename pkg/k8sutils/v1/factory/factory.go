@@ -1,14 +1,13 @@
-// (c) Copyright 2019 Hewlett Packard Enterprise Development LP
 
 package factory
 
 import (
 	"fmt"
 
-	"github.com/paulcarlton/go-utils/pkg/core"
-	k8sutilsv1 "github.com/paulcarlton/go-utils/pkg/k8sutils/v1"
-	"github.com/paulcarlton/go-utils/pkg/k8sutils/v1/fake"
-	"github.com/paulcarlton/go-utils/pkg/k8sutils/v1/k8s"
+	"github.com/paul-carlton/go-utils/pkg/core"
+	k8sutilsv1 "github.com/paul-carlton/go-utils/pkg/k8sutils/v1"
+	"github.com/paul-carlton/go-utils/pkg/k8sutils/v1/fake"
+	"github.com/paul-carlton/go-utils/pkg/k8sutils/v1/k8s"
 )
 
 const (

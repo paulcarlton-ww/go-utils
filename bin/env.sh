@@ -1,5 +1,4 @@
 #!/bin/bash
-# (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
 if [ -z "${GOPATH}" ]; then
     echo "You must specify a GOPATH in your environment"
     return 1

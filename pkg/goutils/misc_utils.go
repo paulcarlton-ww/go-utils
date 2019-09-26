@@ -1,12 +1,11 @@
-// (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
 
 package goutils
 
 import (
 	"net/http"
 
-	"github.com/paulcarlton/go-utils/pkg/core"
-	"github.com/paulcarlton/go-utils/pkg/internal/common"
+	"github.com/paul-carlton/go-utils/pkg/core"
+	"github.com/paul-carlton/go-utils/pkg/internal/common"
 )
 
 // JSONtext generates a string containing a json representation of an interface

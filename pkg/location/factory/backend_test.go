@@ -1,4 +1,3 @@
-// (c) Copyright 2019 Hewlett Packard Enterprise Development LP
 
 package factory
 
@@ -6,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/paulcarlton/go-utils/pkg/core"
-	"github.com/paulcarlton/go-utils/pkg/location"
+	"github.com/paul-carlton/go-utils/pkg/core"
+	"github.com/paul-carlton/go-utils/pkg/location"
 )
 
 func TestSelectHandlerErrors(t *testing.T) {

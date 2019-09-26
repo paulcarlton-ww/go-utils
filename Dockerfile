@@ -1,8 +1,8 @@
-# (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
+
 FROM pcarlton/go-builder:0.0.1 as builder
 
 ARG VERSION
-WORKDIR /go/src/github.com/paulcarlton/utils
+WORKDIR /go/src/github.com/paul-carlton/go-utils
 COPY . .
 RUN make build
 

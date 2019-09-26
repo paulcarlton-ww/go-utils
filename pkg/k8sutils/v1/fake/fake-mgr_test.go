@@ -1,4 +1,3 @@
-// (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
 
 package fake
 
@@ -7,7 +6,7 @@ import (
 
 	"k8s.io/client-go/kubernetes"
 
-	"github.com/paulcarlton/go-utils/pkg/k8sutils/v1/testutils"
+	"github.com/paul-carlton/go-utils/pkg/k8sutils/v1/testutils"
 )
 
 func TestGetClientset(t *testing.T) {

@@ -1,5 +1,3 @@
-(c) Copyright 2017-2019 Hewlett Packard Enterprise Development LP
-
 # Utilities and Library code
 
 Refer to [Developer's Guide](docs/dev-guide.md) for information about contributing to this project.

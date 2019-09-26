@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
-
 # Set versions of software required
 metalinter_version=2.0.12
 golang_version=1.12.7
@@ -101,7 +99,6 @@ if [[ "${ret_code}" != "0" || ! -e "${PROJECT_BIN_ROOT}/gometalinter" ]] ; then
         exit 1
     fi
 fi
-
 
 go version 2>&1 | grep $golang_version >/dev/null
 ret_code="${?}"

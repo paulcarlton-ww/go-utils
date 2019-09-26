@@ -1,4 +1,3 @@
-// (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
 
 // Package location provides an interface to location handlers
 // Location is a URI of the format...

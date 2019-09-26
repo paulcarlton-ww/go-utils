@@ -1,4 +1,3 @@
-// (c) Copyright 2019 Hewlett Packard Enterprise Development LP
 
 package testutils
 
@@ -12,8 +11,8 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/tools/clientcmd"
 
-	"github.com/paulcarlton/go-utils/pkg/core"
-	k8sutilsv1 "github.com/paulcarlton/go-utils/pkg/k8sutils/v1"
+	"github.com/paul-carlton/go-utils/pkg/core"
+	k8sutilsv1 "github.com/paul-carlton/go-utils/pkg/k8sutils/v1"
 )
 
 var (

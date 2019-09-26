@@ -1,11 +1,10 @@
-// (c) Copyright 2019 Hewlett Packard Enterprise Development LP
 
 package factory
 
 import (
 	"testing"
 
-	k8sutilsv1 "github.com/paulcarlton/go-utils/pkg/k8sutils/v1"
+	k8sutilsv1 "github.com/paul-carlton/go-utils/pkg/k8sutils/v1"
 )
 
 func TestGetk8sUtils(t *testing.T) {

@@ -1,4 +1,4 @@
-package: github.com/paulcarlton/go-utils
+package: github.com/paul-carlton/go-utils
 import:
 - package: github.com/ugorji/go
   subpackages:

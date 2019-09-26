@@ -1,5 +1,3 @@
-(c) Copyright 2018 Hewlett Packard Enterprise Development LP
-
 # User Guide
 
 This repository contains testing and development utilities as well as library code for use with golang and python.

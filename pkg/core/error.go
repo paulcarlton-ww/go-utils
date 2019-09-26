@@ -1,5 +1,3 @@
-// (c) Copyright 2019 Hewlett Packard Enterprise Development LP
-
 package core
 
 import (
@@ -7,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/paulcarlton/go-utils/pkg/internal/common"
+	"github.com/paul-carlton/go-utils/pkg/internal/common"
 )
 
 type (

@@ -1,5 +1,3 @@
-(c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
-
 # Developers Guide
 
 This repository is intended to contain testing and development utilities as well as library code for use
@@ -8,11 +6,11 @@ directory of the repository. This will also install any software you need on you
 
 ## Setup
 
-clone into $GOPATH/src/github.com/paulcarlton/go-utils:
+clone into $GOPATH/src/github.com/paul-carlton/go-utils:
 
-    cd $GOPATH/src/github.com/paulcarlton/go-utils
-    git clone git@github.com:paulcarlton/go-utils.git
-    cd utils
+    cd $GOPATH/src/github.com/paul-carlton/go-utils
+    git clone git@github.com:paul-carlton/go-utils.git
+    cd go-utils
 
 Optionally install required software versions in project's bin directory:
 
@@ -25,6 +23,7 @@ This project requires the following software:
     metalinter version = 2.0.12
     golang version = 1.11.3
     godocdown version = head
+    shellcheck
 
 You can install these in the project bin directory using the 'setup.sh' script:
 

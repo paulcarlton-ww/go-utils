@@ -1,5 +1,3 @@
-//(c) Copyright 2019 Hewlett Packard Enterprise Development LP
-
 // Package memory implements a location handler interface that uses
 // a memory backend and can be instantiated by calling
 // core/location/factory.SelectHandler
@@ -14,9 +12,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/paulcarlton/go-utils/pkg/core"
-	"github.com/paulcarlton/go-utils/pkg/goutils"
-	"github.com/paulcarlton/go-utils/pkg/location"
+	"github.com/paul-carlton/go-utils/pkg/core"
+	"github.com/paul-carlton/go-utils/pkg/goutils"
+	"github.com/paul-carlton/go-utils/pkg/location"
 )
 
 const (
