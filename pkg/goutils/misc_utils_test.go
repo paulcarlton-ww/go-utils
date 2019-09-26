@@ -152,7 +152,7 @@ func TestCastToString(t *testing.T) {
 
 	for _, test := range tests {
 		result, err := CastToString(test.object)
-		if result != test.expected.result || ! testutils.CompareItems(err, test.expected.aErr) || testutils.FailTests {
+		if result != test.expected.result || !testutils.CompareItems(err, test.expected.aErr) || testutils.FailTests {
 			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n", test.testNum, test.expected.result,
 				test.expected.aErr, result, err)
 		}

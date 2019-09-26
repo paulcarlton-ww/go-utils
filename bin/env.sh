@@ -4,6 +4,9 @@ if [ -z "${GOPATH}" ]; then
     return 1
 fi
 
+export GO111MODULE=on
+export CGO_ENABLED=0 
+
 PROJECT_DIR="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/..")"
 
 ORG="$(awk -F= '/^ORG:=/{print $2}' "${PROJECT_DIR}/project-name.mk")"
