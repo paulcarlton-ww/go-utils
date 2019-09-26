@@ -19,11 +19,9 @@ Optionally install required software versions in project's bin directory:
 
 This project requires the following software:
 
-    glide version >= v0.13.2
-    metalinter version = 2.0.12
-    golang version = 1.11.3
+    golangci-lint --version = 1.19.1
+    golang version = 1.13.1
     godocdown version = head
-    shellcheck
 
 You can install these in the project bin directory using the 'setup.sh' script:
 
@@ -42,20 +40,8 @@ To run the build and test in a docker container, type:
 
     make
 
-If changes are made to go sources you may need to perform a glide update, type:
+If changes are made to go source imports you may need to perform a go mod vendor, type:
 
-    make glide-update
+    make gomod-update
 
-## Golang Utilities
 
-The 'goutils' directory contains golang utility functions. To test:
-
-    make glide
-    make -C pkg/goutils --makefile=${PWD}/makefile.mk
-
-## Golang Kubernetes Utilities
-
-The 'k8sutils' directory contains golang utility functions related to Kubernetes. To test:
-
-    make glide
-    make -C pkg/k8sutils --makefile=${PWD}/makefile.mk

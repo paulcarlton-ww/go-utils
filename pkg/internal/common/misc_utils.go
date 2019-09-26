@@ -1,6 +1,4 @@
-// (c) Copyright 2018-2019 Hewlett Packard Enterprise Development LP
-
-package common
+package common // nolint typecheck
 
 import (
 	"bytes"
@@ -33,7 +31,10 @@ func JSONtext(i interface{}) string {
 // RequestDebug generates a string containing details of a request
 func RequestDebug(r *http.Request) string {
 	debugText := fmt.Sprintf("URL: %+v\n", r.URL)
-	buf, _ := ioutil.ReadAll(r.Body)
+	buf, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return fmt.Sprintf("failed to read body, %s", err)
+	}
 	rdr1 := ioutil.NopCloser(bytes.NewBuffer(buf))
 	rdr2 := ioutil.NopCloser(bytes.NewBuffer(buf))
 	data, e := ioutil.ReadAll(rdr1)
@@ -165,7 +166,7 @@ func PrettyJSON(data string) (string, error) {
 	return prettyJSON.String(), nil
 }
 
-var sleepSecsFunc = sleepSecs
+var sleepSecsFunc = sleepSecs // nolint gochecknoglobals
 
 func sleepSecs(seconds uint) {
 	time.Sleep(time.Duration(int64(time.Second) * int64(seconds)))

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Set versions of software required
-metalinter_version=2.0.12
-golang_version=1.12.7
+linter_version=1.19.1
+golang_version=1.13.1
 
 function usage()
 {
@@ -20,31 +20,16 @@ function args() {
     done
 }
 
-function install_glide() {
-    echo "Installing glide"
-    curl https://glide.sh/get | sh
-}
-
-function install_gometalinter() {
-    echo "Installing gometalinter version: ${metalinter_version}"
-    set -e
-    pushd /tmp
-    curl -qL -o gometalinter.tar.gz "https://github.com/alecthomas/gometalinter/releases/download/v${metalinter_version}/gometalinter-${metalinter_version}-linux-amd64.tar.gz" &&
-     mkdir -p gometalinter &&
-     tar xvzf gometalinter.tar.gz --strip-components=1 -C gometalinter &&
-     rm ./gometalinter/COPYING ./gometalinter/README.md &&
-     cp ./gometalinter/* "${PROJECT_BIN_ROOT}" &&
-     rm -f gometalinter.tar.gz &&
-     rm -rf ./gometalinter &&
-    popd >/dev/null
-    set +e
-    "${PROJECT_BIN_ROOT}"/gometalinter install
+function install_linter() {
+    curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b "$(go env GOPATH)"/bin v${linter_version}
 }
 
 function install_golang() {
     echo "Installing golang version: ${golang_version}"
+    # shellcheck disable=SC2164
     pushd /tmp >/dev/null
     # shellcheck disable=SC1090
+    # shellcheck disable=SC2164
     curl -qL -O "https://storage.googleapis.com/golang/go${golang_version}.linux-amd64.tar.gz" &&
       tar xfa go${golang_version}.linux-amd64.tar.gz &&
       rm -rf "${PROJECT_BIN_ROOT}/go" &&
@@ -52,10 +37,12 @@ function install_golang() {
       source "${SCRIPT_DIR}/env.sh" &&
     popd >/dev/null
 
+    # shellcheck disable=SC2164
     pushd "${GOROOT}/src/go/types" > /dev/null
     echo "Installing gotype linter"
     go build gotype.go
     cp gotype "${GOBIN}"
+    # shellcheck disable=SC2164
     popd >/dev/null
 }
 
@@ -88,14 +75,14 @@ rm -rf "${PROJECT_DIR}/bin/local"
 
 make_local
 
-gometalinter --version 2>&1 | grep $metalinter_version >/dev/null
+golangci-lint --version 2>&1 | grep $linter_version >/dev/null
 ret_code="${?}"
-if [[ "${ret_code}" != "0" || ! -e "${PROJECT_BIN_ROOT}/gometalinter" ]] ; then
-    install_gometalinter
-    gometalinter --version 2>&1 | grep $metalinter_version >/dev/null
+if [[ "${ret_code}" != "0" || ! -e "${PROJECT_BIN_ROOT}/golangci-lint" ]] ; then
+    install_linter
+    golangci-lint --version 2>&1 | grep $linter_version >/dev/null
     ret_code="${?}"
     if [ "${ret_code}" != "0" ] ; then
-        echo "Failed to install gometalinter"
+        echo "Failed to install linter"
         exit 1
     fi
 fi
@@ -119,17 +106,6 @@ if [[ "${ret_code}" == "127" || "${GOBIN}" != "${PROJECT_BIN_ROOT}" ]] ; then
     godocdown >/dev/null 2>&1
     if [ "$?" == "127" ] ; then
         echo "Failed to install godocdown"
-        exit 1
-    fi
-fi
-
-glide >/dev/null 2>&1
-ret_code="${?}"
-if [[ "${ret_code}" == "127" || "${GOBIN}" != "${PROJECT_BIN_ROOT}" ]] ; then
-    install_glide
-    glide >/dev/null 2>&1
-    if [ "$?" == "127" ] ; then
-        echo "failed to install glide"
         exit 1
     fi
 fi

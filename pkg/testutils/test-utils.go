@@ -1,4 +1,3 @@
-
 package testutils
 
 import (
@@ -11,7 +10,8 @@ import (
 // Test utilities
 
 // FailTests determines if tests are set to failed so expected and results are emitted even if tests pass
-var FailTests = false // Set to true to test failure output
+// Set to true to test failure output
+var FailTests = false // nolint gochecknoglobals
 
 // RemoveBottom removes items from caller list including and prior to testing.tRunner()
 func RemoveBottom(callers []string) []string {
@@ -88,7 +88,7 @@ func ContainsStringArray(one, two []string, first bool) bool {
 	return false
 }
 
-func init() {
+func init() { // nolint gochecknoinits
 	_, present := os.LookupEnv("FAILED_OUTPUT_TEST")
 	if present {
 		FailTests = true

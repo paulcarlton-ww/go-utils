@@ -1,4 +1,3 @@
-
 // Package location provides an interface to location handlers
 // Location is a URI of the format...
 // URI = scheme://userinfo@host:port/path?query#fragment

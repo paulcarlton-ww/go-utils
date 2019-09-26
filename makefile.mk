@@ -70,16 +70,18 @@ clean-lint:
 	rm -f ${LINT_ARTIFACT}
 
 lint: ${LINT_ARTIFACT}
-${LINT_ARTIFACT}: ${MAKEFILE_PATH}/gometalinter.json ${GO_SOURCES}
+${LINT_ARTIFACT}: ${MAKEFILE_PATH}/golangci-lint.yml ${GO_SOURCES}
 	echo "${YELLOW}Running go lint${NC_DIR}" && \
-    (cd ${MAKEFILE_PATH} && \
-	 procs=$$(expr $$(grep -c ^processor /proc/cpuinfo) '*' 2 '-' 1) && \
-	 gometalinter \
-		--config gometalinter.json \
+	(cd ${MAKEFILE_PATH} && \
+	 procs=$$(expr $$( \
+		(grep -c ^processor /proc/cpuinfo || \
+		 sysctl -n hw.ncpu || \
+		 echo 1) 2>/dev/null) '*' 2 '-' 1) && \
+	 golangci-lint run \
+		--config ${MAKEFILE_PATH}/golangci-lint.yml \
 		--concurrency=$${procs} \
 		"$$(realpath --relative-to ${MAKEFILE_PATH} ${CURDIR})/.") && \
-    touch $@
-
+	touch $@
 
 clean-docker-shellcheck:
 	rm -f ${BASH_ARTIFACT}

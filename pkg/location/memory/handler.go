@@ -1,10 +1,11 @@
+// nolint typecheck
 // Package memory implements a location handler interface that uses
 // a memory backend and can be instantiated by calling
 // core/location/factory.SelectHandler
 // with a URI that contains 'memory://" scheme.
 // Required fields in the URI:
 // Scheme: should be equal to "memory"
-// Path: should be of the form "/secret/..."
+
 package memory
 
 import (
@@ -12,7 +13,6 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/paul-carlton/go-utils/pkg/core"
 	"github.com/paul-carlton/go-utils/pkg/goutils"
 	"github.com/paul-carlton/go-utils/pkg/location"
 )
@@ -32,7 +32,7 @@ type memory struct {
 	data
 }
 
-var v memory
+var v memory // nolint gochecknoglobals
 
 type data map[string]interface{}
 
@@ -68,11 +68,11 @@ func GetHandler() (location.Handler, error) {
 func (memory *memory) VerifyScheme(uri string) error {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
-		return core.RaiseError("", core.ErrorInvalidInput, fmt.Sprintf("%s %s", location.ErrorStringURIParseFail, uri), err)
+		return fmt.Errorf("%s %s, %s", location.ErrorStringURIParseFail, uri, err)
 	}
 
 	if uriParts.Scheme != memory.Scheme() {
-		return core.MakeError(memory.ID(), core.ErrorInvalidInput, fmt.Sprintf("%s %s:", location.ErrorStringURISchemeMismatch, memory.Scheme()))
+		return fmt.Errorf("%s, %s", location.ErrorStringURISchemeMismatch, memory.Scheme())
 	}
 	return nil
 }
@@ -97,7 +97,7 @@ func (memory *memory) getSession(uri string) (data, error) {
 // will reuse this session if it hasn't expired.
 func (memory *memory) Connect(uri string) error {
 	if _, err := memory.getSession(uri); err != nil {
-		return core.RaiseError(memory.ID(), core.ErrorUnknown, "failed to connect", err)
+		return fmt.Errorf("failed to connect, %s", err)
 	}
 
 	return nil
@@ -131,12 +131,12 @@ func list(data *data, path string) *PathInfo {
 func (memory *memory) ListData(uri string) ([]string, error) {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
-		return nil, core.RaiseError(memory.ID(), core.ErrorInvalidInput, ErrorConnectFail, err)
+		return nil, fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	session, err := memory.getSession(uri)
 	if err != nil {
-		return nil, core.RaiseError(memory.ID(), core.ErrorUnknown, ErrorConnectFail, err)
+		return nil, fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	return list(&session, uriParts.Path).ItemList, nil
@@ -146,12 +146,12 @@ func (memory *memory) ListData(uri string) ([]string, error) {
 func (memory *memory) DeleteData(uri string) error {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
-		return core.RaiseError(memory.ID(), core.ErrorInvalidInput, ErrorConnectFail, err)
+		return fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	session, err := memory.getSession(uri)
 	if err != nil {
-		return core.RaiseError(memory.ID(), core.ErrorUnknown, ErrorConnectFail, err)
+		return fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	if _, ok := session[uriParts.Path]; !ok {
@@ -166,31 +166,31 @@ func (memory *memory) DeleteData(uri string) error {
 func (memory *memory) GetData(uri string) (interface{}, error) {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
-		return nil, core.RaiseError(memory.ID(), core.ErrorInvalidInput, ErrorConnectFail, err)
+		return nil, fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	session, err := memory.getSession(uri)
 	if err != nil {
-		return nil, core.RaiseError(memory.ID(), core.ErrorUnknown, ErrorConnectFail, err)
+		return nil, fmt.Errorf("%s, %s",  ErrorConnectFail, err)
 	}
 
 	if value, ok := session[uriParts.Path]; ok {
 		return value, nil
 	}
 
-	return nil, core.MakeError(memory.ID(), core.ErrorNotFound, fmt.Sprintf("no data at: %s", uriParts.Path))
+	return nil, fmt.Errorf("no data at: %s", uriParts.Path)
 }
 
 // PutData sets data value for a uri into the memory backend
 func (memory *memory) PutData(uri string, data interface{}) error {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
-		return core.RaiseError(memory.ID(), core.ErrorUnknown, location.ErrorStringURIParseFail, err)
+		return fmt.Errorf("%s, %s", location.ErrorStringURIParseFail, err)
 	}
 
 	session, err := memory.getSession(uri)
 	if err != nil {
-		return core.RaiseError(memory.ID(), core.ErrorUnknown, ErrorConnectFail, err)
+		return fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	session[uriParts.Path] = data

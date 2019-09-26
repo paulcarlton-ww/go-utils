@@ -1,4 +1,3 @@
-
 package common
 
 import (
@@ -25,7 +24,8 @@ func TestCallers(t *testing.T) {
 			fmt.Sprintf("%s%s%s",
 				"github.com/paul-carlton/go-utils/pkg/internal/common.Callers() - ", pwd, "/misc_utils.go(NN)"),
 			fmt.Sprintf("%s%s%s",
-				"github.com/paul-carlton/go-utils/pkg/internal/common.TestCallers() - ", pwd, "/misc_utils_test.go(NN)")}},
+				"github.com/paul-carlton/go-utils/pkg/internal/common.TestCallers() - ", pwd,
+				"/misc_utils_test.go(NN)")}},
 		{testNum: 2, levels: 10, short: true, expected: []string{
 			"common.Callers() - misc_utils.go(NN)",
 			"common.TestCallers() - misc_utils_test.go(NN)"}},
@@ -41,7 +41,8 @@ func TestCallers(t *testing.T) {
 		}
 		callers = testutils.RemoveBottom(callers)
 		if !testutils.CompareWhereList(test.expected, callers) || testutils.FailTests {
-			t.Errorf("\nTest: %d\nExpected:\n%s\nGot:\n%s", test.testNum, testutils.DisplayStrings(test.expected), testutils.DisplayStrings(callers))
+			t.Errorf("\nTest: %d\nExpected:\n%s\nGot:\n%s", test.testNum,
+				testutils.DisplayStrings(test.expected), testutils.DisplayStrings(callers))
 		}
 	}
 }
@@ -59,7 +60,8 @@ func TestGetCaller(t *testing.T) {
 	}
 	var tests = []callerInfo{
 		{testNum: 1, skip: 1, short: false,
-			expected: fmt.Sprintf("github.com/paul-carlton/go-utils/pkg/internal/common.Callers() - %s/misc_utils.go(NN)", pwd)},
+			expected: fmt.Sprintf(
+				"github.com/paul-carlton/go-utils/pkg/internal/common.Callers() - %s/misc_utils.go(NN)", pwd)},
 		{testNum: 2, skip: 1, short: true,
 			expected: "common.Callers() - misc_utils.go(NN)"},
 		{testNum: 3, skip: 2, short: true,

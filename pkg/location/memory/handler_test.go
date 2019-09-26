@@ -1,4 +1,3 @@
-
 package memory
 
 import (
@@ -6,7 +5,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/paul-carlton/go-utils/pkg/core"
 	"github.com/paul-carlton/go-utils/pkg/testutils"
 
 	"github.com/paul-carlton/go-utils/pkg/location"
@@ -100,7 +98,7 @@ func TestGetData(t *testing.T) {
 		description string
 		input       string
 		expected    *expected
-		setupFunc   func(t *testing.T, test *test) location.Handler
+		setupFunc   func(t *testing.T, test test) location.Handler
 	}
 
 	const (
@@ -108,25 +106,25 @@ func TestGetData(t *testing.T) {
 		okPath    = "/secret/services/ms/ALL/ms/mgmtsvc/mgmt/stuff"
 	)
 
-	defaultSetup := func(t *testing.T, test *test) location.Handler {
+	defaultSetup := func(t *testing.T, test test) location.Handler {
 		handler, err := GetHandler()
 		if err != nil {
-			t.Errorf("failed to get handler: %s", core.ErrorText(err))
+			t.Errorf("failed to get handler: %s", err)
 			return nil
 		}
 
 		err = handler.PutData(test.input, test.expected.result)
 		if err != nil {
-			t.Errorf("failed to store data: %s", core.ErrorText(err))
+			t.Errorf("failed to store data: %s", err)
 			return nil
 		}
 		return handler
 	}
 
-	notFoundSetup := func(t *testing.T, test *test) location.Handler {
+	notFoundSetup := func(t *testing.T, test test) location.Handler {
 		handler, err := GetHandler()
 		if err != nil {
-			t.Errorf("failed to get handler: %s", core.ErrorText(err))
+			t.Errorf("failed to get handler: %s", err)
 			return nil
 		}
 		return handler
@@ -143,21 +141,19 @@ func TestGetData(t *testing.T) {
 			description: "data not present",
 			input:       fmt.Sprintf("memory://%s", emptyPath),
 			expected: &expected{result: nil,
-				err: core.MakeErrorAt(HandlerID, core.ErrorNotFound,
-					fmt.Sprintf("no data at: %s", emptyPath),
-					"memory.(*memory).GetData() - handler.go(183)")},
+				err: fmt.Errorf("no data at: %s", emptyPath)},
 			setupFunc: notFoundSetup},
 	}
 
 	for _, test := range tests {
-		handler := test.setupFunc(t, &test)
+		handler := test.setupFunc(t, test)
 		if handler == nil {
 			continue
 		}
 		result, err := handler.GetData(test.input)
-		if result != test.expected.result || core.ErrorText(err) != core.ErrorText(test.expected.err) || testutils.FailTests {
+		if result != test.expected.result || !testutils.CompareItems(err, test.expected.err) || testutils.FailTests {
 			t.Errorf("\nTest %d: %s\nInput1..:\n%s\nExpected:\n%+v\n%s\nGot.....:\n%+v\n%s",
-				test.testNum, test.description, test.input, test.expected.result, core.ErrorText(test.expected.err), result, core.ErrorText(err))
+				test.testNum, test.description, test.input, test.expected.result, test.expected.err, result, err)
 		}
 	}
 

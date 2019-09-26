@@ -1,5 +1,4 @@
-
-package testutils
+package testutils //nolint typecheck
 
 import (
 	"os"
@@ -35,14 +34,14 @@ type (
 
 var (
 	// Prep is the default pre test function
-	Prep = DefaultPrep
+	Prep = DefaultPrep // nolint gochecknoglobals
 	// Check is the default  post test result check
-	Check = DefaultCheck
+	Check = DefaultCheck // nolint gochecknoglobals
 	// Report is the default post test results reporter
-	Report = DefaultReport
+	Report = DefaultReport // nolint gochecknoglobals
 	// NilValue the text used in place of a nil value in test report
 	// The user can change this value if needed
-	NilValue = "testutils.ToString returned nil value"
+	NilValue = "testutils.ToString returned nil value" // nolint gochecknoglobals
 )
 
 // RestoreDefaultTestFuncs is used to restore the default functions after a series of tests against a function

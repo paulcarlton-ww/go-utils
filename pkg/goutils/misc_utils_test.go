@@ -1,4 +1,3 @@
-
 package goutils
 
 import (
@@ -7,7 +6,6 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/paul-carlton/go-utils/pkg/core"
 	"github.com/paul-carlton/go-utils/pkg/testutils"
 )
 
@@ -25,7 +23,8 @@ func TestCallers(t *testing.T) {
 	var tests = []callerInfo{
 		{testNum: 1, levels: 10, short: false, expected: []string{
 			fmt.Sprintf("%s%s%s",
-				"github.com/paul-carlton/go-utils/pkg/internal/common.Callers() - ", filepath.Dir(pwd), "/internal/common/misc_utils.go(NN)"),
+				"github.com/paul-carlton/go-utils/pkg/internal/common.Callers() - ", filepath.Dir(pwd),
+				"/internal/common/misc_utils.go(NN)"),
 			fmt.Sprintf("%s%s%s",
 				"github.com/paul-carlton/go-utils/pkg/goutils.Callers() - ", pwd, "/misc_utils.go(NN)"),
 			fmt.Sprintf("%s%s%s",
@@ -46,7 +45,8 @@ func TestCallers(t *testing.T) {
 		}
 		callers = testutils.RemoveBottom(callers)
 		if !testutils.CompareWhereList(test.expected, callers) || testutils.FailTests {
-			t.Errorf("\nTest: %d\nExpected:\n%s\nGot:\n%s", test.testNum, testutils.DisplayStrings(test.expected), testutils.DisplayStrings(callers))
+			t.Errorf("\nTest: %d\nExpected:\n%s\nGot:\n%s",
+				test.testNum, testutils.DisplayStrings(test.expected), testutils.DisplayStrings(callers))
 		}
 	}
 }
@@ -64,7 +64,8 @@ func TestGetCaller(t *testing.T) {
 	}
 	var tests = []callerInfo{
 		{testNum: 1, skip: 1, short: false,
-			expected: fmt.Sprintf("github.com/paul-carlton/go-utils/pkg/internal/common.GetCaller() - %s/internal/common/misc_utils.go(NN)", filepath.Dir(pwd))},
+			expected: fmt.Sprintf("github.com/paul-carlton/go-utils/pkg/internal/common.GetCaller() "+
+				"- %s/internal/common/misc_utils.go(NN)", filepath.Dir(pwd))},
 		{testNum: 2, skip: 1, short: true,
 			expected: "common.GetCaller() - misc_utils.go(NN)"},
 		{testNum: 3, skip: 2, short: true,
@@ -133,26 +134,27 @@ func TestFindInStringSlice(t *testing.T) {
 
 func TestCastToString(t *testing.T) {
 	type expected struct {
-		result  string
-		coreErr error
+		result string
+		aErr   error
 	}
 	type TestInfo struct {
 		testNum  int
 		object   interface{}
 		expected expected
 	}
-	coreErr := core.MakeErrorAt("", core.ErrorInvalidInput, "failed to cast to string", "goutils.CastToString() - misc_utils.go(NN)")
+	err := fmt.Errorf("failed to cast to string")
 	var tests = []TestInfo{
-		{testNum: 1, object: []string{"one", "two"}, expected: expected{"", coreErr}},
+		{testNum: 1, object: []string{"one", "two"}, expected: expected{"", err}},
 		{testNum: 2, object: "one", expected: expected{"one", nil}},
-		{testNum: 3, object: expected{"str", nil}, expected: expected{"", coreErr}},
-		{testNum: 4, object: 2, expected: expected{"", coreErr}},
+		{testNum: 3, object: expected{"str", nil}, expected: expected{"", err}},
+		{testNum: 4, object: 2, expected: expected{"", err}},
 	}
 
 	for _, test := range tests {
 		result, err := CastToString(test.object)
-		if result != test.expected.result || !core.CompareErrors(err, test.expected.coreErr) || testutils.FailTests {
-			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n", test.testNum, test.expected.result, test.expected.coreErr, result, err)
+		if result != test.expected.result || ! testutils.CompareItems(err, test.expected.aErr) || testutils.FailTests {
+			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n", test.testNum, test.expected.result,
+				test.expected.aErr, result, err)
 		}
 	}
 }
@@ -182,7 +184,7 @@ func TestCompareAsJSON(t *testing.T) {
 		{testNum: 2, objects: []interface{}{"one", "one"}, expected: true},
 		{testNum: 3, objects: []interface{}{1, 2}, expected: false},
 		{testNum: 4, objects: []interface{}{1, 1}, expected: true},
-		{testNum: 5, objects: []interface{}{
+		{testNum: 5, objects: []interface{}{ //nolint duplicate
 			testData{B: true, I: 1, F: 12.43,
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
@@ -191,7 +193,7 @@ func TestCompareAsJSON(t *testing.T) {
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 				subData: subData{S: "embedded", A: []int{9, 11, 7}}}}, expected: false},
-		{testNum: 6, objects: []interface{}{
+		{testNum: 6, objects: []interface{}{ //nolint duplicate
 			testData{B: true, I: 1, F: 12.43,
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
@@ -213,7 +215,8 @@ func TestCompareAsJSON(t *testing.T) {
 			if err != nil {
 				t.Errorf("failed to convert test data to json, %s", err)
 			}
-			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%s\n%s\n", test.testNum, result, test.expected, oneJSON, twoJSON)
+			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%s\n%s\n",
+				test.testNum, result, test.expected, oneJSON, twoJSON)
 		}
 	}
 }
@@ -237,7 +240,8 @@ func TestCompareStringSlices(t *testing.T) {
 	for _, test := range tests {
 		result := CompareStringSlices(test.strSlice1, test.strSlice2)
 		if result != test.expected || testutils.FailTests {
-			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%+v\n%+v\n", test.testNum, test.expected, result, test.strSlice1, test.strSlice2)
+			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%+v\n%+v\n",
+				test.testNum, test.expected, result, test.strSlice1, test.strSlice2)
 		}
 	}
 }
@@ -261,7 +265,8 @@ func TestPrettyJSON(t *testing.T) {
 	for _, test := range tests {
 		result, err := PrettyJSON(test.input)
 		if result != test.expected.result || !testutils.CompareItems(test.expected.err, err) || testutils.FailTests {
-			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n", test.testNum, test.expected.result, test.expected.err, result, err)
+			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n",
+				test.testNum, test.expected.result, test.expected.err, result, err)
 		}
 	}
 }

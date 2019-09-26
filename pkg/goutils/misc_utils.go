@@ -1,10 +1,9 @@
-
-package goutils
+package goutils //nolint typecheck
 
 import (
+	"fmt"
 	"net/http"
 
-	"github.com/paul-carlton/go-utils/pkg/core"
 	"github.com/paul-carlton/go-utils/pkg/internal/common"
 )
 
@@ -48,7 +47,7 @@ func CastToString(i interface{}) (string, error) {
 	if str, ok := i.(string); ok {
 		return str, nil
 	}
-	return "", core.MakeError("", core.ErrorInvalidInput, "failed to cast to string")
+	return "", fmt.Errorf("failed to cast to string")
 }
 
 // CompareAsJSON compares two interfaces by converting them to json and comparing json text
