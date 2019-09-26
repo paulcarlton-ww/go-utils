@@ -128,8 +128,6 @@ docker-builder: ${BUILD_DIR} ${BUILDER_ARTIFACT}
 		${DOCKER_BUILD_OPTIONS} \
 		--build-arg http_proxy \
 		--build-arg https_proxy \
-		--build-arg GO111MODULE=on \
-        --build-arg CGO_ENABLED=0 \
 		--build-arg no_proxy \
 		--tag ${TAG} \
 		--file $< \

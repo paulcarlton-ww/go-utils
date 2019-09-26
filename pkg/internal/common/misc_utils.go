@@ -17,12 +17,12 @@ import (
 func JSONtext(i interface{}) string {
 	details := fmt.Sprintf("json for %+v...\n", i)
 	if jsonData, err := json.Marshal(i); err != nil {
-		details = details + fmt.Sprintf("json marshal error: %s\n", err)
+		details += fmt.Sprintf("json marshal error: %s\n", err)
 	} else {
 		if jsonText, err := PrettyJSON(string(jsonData)); err != nil {
-			details = details + fmt.Sprintf("json format error: %s\n", err)
+			details += fmt.Sprintf("json format error: %s\n", err)
 		} else {
-			details = details + fmt.Sprintf("%s\n", jsonText)
+			details += fmt.Sprintf("%s\n", jsonText)
 		}
 	}
 	return details
@@ -39,9 +39,9 @@ func RequestDebug(r *http.Request) string {
 	rdr2 := ioutil.NopCloser(bytes.NewBuffer(buf))
 	data, e := ioutil.ReadAll(rdr1)
 	if e != nil {
-		debugText = debugText + fmt.Sprintf("error reading body, %s", e)
+		debugText += fmt.Sprintf("error reading body, %s", e)
 	} else {
-		debugText = debugText + fmt.Sprintf("Body..\n%s\n", string(data))
+		debugText += fmt.Sprintf("Body..\n%s\n", string(data))
 	}
 	r.Body = rdr2 // OK since rdr2 implements the io.ReadCloser interface
 	return debugText
@@ -105,7 +105,6 @@ func GetCaller(skip uint, short bool) string {
 
 // ToJSON is used to convert a data structure into JSON format.
 func ToJSON(data interface{}) (string, error) {
-
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return "", err
@@ -153,7 +152,7 @@ func CompareStringSlices(one, two []string) bool {
 	}
 	sort.Strings(one)
 	sort.Strings(two)
-	return strings.Join(one[:], "") == strings.Join(two[:], "")
+	return strings.Join(one, "") == strings.Join(two[:], "")
 }
 
 // PrettyJSON is used to format JSON

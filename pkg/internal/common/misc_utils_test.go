@@ -155,7 +155,7 @@ func TestCompareAsJSON(t *testing.T) {
 		{testNum: 2, objects: []interface{}{"one", "one"}, expected: true},
 		{testNum: 3, objects: []interface{}{1, 2}, expected: false},
 		{testNum: 4, objects: []interface{}{1, 1}, expected: true},
-		{testNum: 5, objects: []interface{}{
+		{testNum: 5, objects: []interface{}{ // nolint duplicate
 			testData{B: true, I: 1, F: 12.43,
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
@@ -164,7 +164,7 @@ func TestCompareAsJSON(t *testing.T) {
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 				subData: subData{S: "embedded", A: []int{9, 11, 7}}}}, expected: false},
-		{testNum: 6, objects: []interface{}{
+		{testNum: 6, objects: []interface{}{ // nolint duplicate
 			testData{B: true, I: 1, F: 12.43,
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
@@ -186,7 +186,8 @@ func TestCompareAsJSON(t *testing.T) {
 			if err != nil {
 				t.Errorf("failed to convert test data to json, %s", err)
 			}
-			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%s\n%s\n", test.testNum, result, test.expected, oneJSON, twoJSON)
+			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%s\n%s\n",
+				test.testNum, result, test.expected, oneJSON, twoJSON)
 		}
 	}
 }
@@ -210,7 +211,8 @@ func TestCompareStringSlices(t *testing.T) {
 	for _, test := range tests {
 		result := CompareStringSlices(test.strSlice1, test.strSlice2)
 		if result != test.expected || testutils.FailTests {
-			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%+v\n%+v\n", test.testNum, test.expected, result, test.strSlice1, test.strSlice2)
+			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%+v\n%+v\n",
+				test.testNum, test.expected, result, test.strSlice1, test.strSlice2)
 		}
 	}
 }
@@ -234,7 +236,8 @@ func TestPrettyJSON(t *testing.T) {
 	for _, test := range tests {
 		result, err := PrettyJSON(test.input)
 		if result != test.expected.result || !testutils.CompareItems(test.expected.err, err) || testutils.FailTests {
-			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n", test.testNum, test.expected.result, test.expected.err, result, err)
+			t.Errorf("Test: %d\nExpected:\n%s\n%+v\nGot....:\n%s\n%+v\n",
+				test.testNum, test.expected.result, test.expected.err, result, err)
 		}
 	}
 }
