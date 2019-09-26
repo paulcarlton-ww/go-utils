@@ -152,7 +152,7 @@ func CompareStringSlices(one, two []string) bool {
 	}
 	sort.Strings(one)
 	sort.Strings(two)
-	return strings.Join(one, "") == strings.Join(two[:], "")
+	return strings.Join(one, "") == strings.Join(two, "")
 }
 
 // PrettyJSON is used to format JSON

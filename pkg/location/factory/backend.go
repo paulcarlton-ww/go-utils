@@ -8,10 +8,6 @@ import (
 	"github.com/paul-carlton/go-utils/pkg/location/memory"
 )
 
-const (
-	id string = "location factory"
-)
-
 // SelectHandler returns the appropriate location
 // handler that implements the scheme used in the URI.
 // Currently only Vault handler is implemented but

@@ -171,7 +171,7 @@ func (memory *memory) GetData(uri string) (interface{}, error) {
 
 	session, err := memory.getSession(uri)
 	if err != nil {
-		return nil, fmt.Errorf("%s, %s",  ErrorConnectFail, err)
+		return nil, fmt.Errorf("%s, %s", ErrorConnectFail, err)
 	}
 
 	if value, ok := session[uriParts.Path]; ok {

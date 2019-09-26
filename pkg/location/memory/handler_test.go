@@ -5,10 +5,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/paul-carlton/go-utils/pkg/testutils"
-
 	"github.com/paul-carlton/go-utils/pkg/location"
+	"github.com/paul-carlton/go-utils/pkg/testutils"
 )
+
+const testPath = "memory:///secret/services/ms/ALL/ms/mgmtsvc/mgmt/test1"
 
 // Tests
 
@@ -49,10 +50,9 @@ func TestMemoryLocationHandlerConnect(t *testing.T) {
 }
 
 func TestMemoryLocationHandler_PutGetData(t *testing.T) {
-
 	var v memory
 
-	uri := "memory:///secret/services/ms/ALL/ms/mgmtsvc/mgmt/test1"
+	uri := testPath
 	data1 := map[string]string{
 		"one":  "1",
 		"two":  "2",
@@ -64,7 +64,6 @@ func TestMemoryLocationHandler_PutGetData(t *testing.T) {
 		t.Errorf("PutData error: %s", err)
 	}
 
-	uri = "memory:///secret/services/ms/ALL/ms/mgmtsvc/mgmt/test1"
 	data2, err := v.GetData(uri)
 	if err != nil {
 		t.Errorf("GetData error: %s", err)
@@ -84,10 +83,9 @@ func TestMemoryLocationHandler_PutGetData(t *testing.T) {
 	} else {
 		t.Errorf("Expected: %+v Got: %+v", data1, d1)
 	}
-
 }
 
-func TestGetData(t *testing.T) {
+func TestGetData(t *testing.T) { // nolint funlen
 	type expected struct {
 		result interface{}
 		err    error
@@ -156,5 +154,4 @@ func TestGetData(t *testing.T) {
 				test.testNum, test.description, test.input, test.expected.result, test.expected.err, result, err)
 		}
 	}
-
 }

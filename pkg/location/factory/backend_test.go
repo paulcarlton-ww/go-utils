@@ -8,13 +8,18 @@ import (
 	"github.com/paul-carlton/go-utils/pkg/location"
 )
 
+const memoryHandler = "memory"
+
 func TestSelectHandlerErrors(t *testing.T) {
-	l, _ := SelectHandler("memory://")
-	if l.Scheme() != "memory" {
+	l, err := SelectHandler("memory://")
+	if err != nil {
+		t.Errorf("SelectHandler failed, %s", err)
+	}
+	if l.Scheme() != memoryHandler {
 		t.Errorf("Got %s", l.Scheme())
 	}
 
-	_, err := SelectHandler("something://")
+	_, err = SelectHandler("something://")
 	if err == nil {
 		t.Errorf("Expected error but got nil")
 		return
@@ -31,12 +36,14 @@ func TestSelectHandlerErrors(t *testing.T) {
 		t.Errorf("Expected error Type core.Error but received error object didn't match this type")
 		return
 	}
-
 }
 
 func TestSelectHandlerSchemes(t *testing.T) {
-	l, _ := SelectHandler("memory://")
-	if l.Scheme() != "memory" {
+	l, err := SelectHandler("memory://")
+	if err != nil {
+		t.Errorf("SelectHandler failed, %s", err)
+	}
+	if l.Scheme() != memoryHandler {
 		t.Errorf("Expected: vault Got:%s", l.Scheme())
 	}
 }

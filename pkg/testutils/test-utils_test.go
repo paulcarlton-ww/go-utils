@@ -150,7 +150,7 @@ func TestCompareItems(t *testing.T) {
 	var tests = []TestInfo{
 		{testNum: 1, one: 1, two: 2, expected: false},
 		{testNum: 2, one: 1, two: 1, expected: true},
-		{testNum: 5, one: testData{B: true, I: 1, F: 12.43,
+		{testNum: 5, one: testData{B: true, I: 1, F: 12.43, // nolint duplicate
 			X:       subData{S: "interface"},
 			E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 			subData: subData{S: "embedded", A: []int{9, 8, 7}}},
@@ -158,7 +158,7 @@ func TestCompareItems(t *testing.T) {
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 				subData: subData{S: "embedded", A: []int{9, 11, 7}}}, expected: false},
-		{testNum: 6, one: testData{B: true, I: 1, F: 12.43,
+		{testNum: 6, one: testData{B: true, I: 1, F: 12.43, // nolint duplicate
 			X:       subData{S: "interface"},
 			E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 			subData: subData{S: "embedded", A: []int{9, 8, 7}}},
@@ -174,7 +174,8 @@ func TestCompareItems(t *testing.T) {
 	for _, test := range tests {
 		result := CompareItems(test.one, test.two)
 		if result != test.expected || FailTests {
-			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%+v\n%+v\n", test.testNum, test.expected, result, test.one, test.two)
+			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%+v\n%+v\n",
+				test.testNum, test.expected, result, test.one, test.two)
 		}
 	}
 }
