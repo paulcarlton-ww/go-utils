@@ -21,7 +21,7 @@ function args() {
 }
 
 function install_linter() {
-    curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b "$(go env GOPATH)"/bin v${linter_version}
+    curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b "${PROJECT_BIN_ROOT}" v${linter_version}
 }
 
 function install_golang() {

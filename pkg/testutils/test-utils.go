@@ -5,6 +5,9 @@ import (
 	"io"
 	"os"
 	"strings"
+	"testing"
+
+	"github.com/paul-carlton/go-utils/pkg/goutils"
 )
 
 // Test utilities
@@ -125,4 +128,12 @@ func DisplayStrings(strs []string) string {
 		newline = "\n"
 	}
 	return output
+}
+
+func GetTestJSON(t *testing.T, data interface{}) string {
+	jsonResp, err := goutils.ToJSON(data)
+	if err != nil {
+		t.Errorf("failed to convert data: %+v to json, %s", data, err)
+	}
+	return jsonResp
 }

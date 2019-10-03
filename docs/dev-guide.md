@@ -8,7 +8,7 @@ directory of the repository. This will also install any software you need on you
 
 clone into $GOPATH/src/github.com/paul-carlton/go-utils:
 
-    cd $GOPATH/src/github.com/paul-carlton/go-utils
+    cd $GOPATH/src/github.com/paul-carlton
     git clone git@github.com:paul-carlton/go-utils.git
     cd go-utils
 
