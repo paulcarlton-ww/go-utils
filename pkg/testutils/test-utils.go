@@ -130,6 +130,7 @@ func DisplayStrings(strs []string) string {
 	return output
 }
 
+// GetTestJSON returns json representation of an interface or sets test error if it fails
 func GetTestJSON(t *testing.T, data interface{}) string {
 	jsonResp, err := goutils.ToJSON(data)
 	if err != nil {
