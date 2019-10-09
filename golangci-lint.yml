@@ -3,6 +3,7 @@
 
 # options for analysis running
 run:
+  modules-download-mode: vendor
   # timeout for analysis, e.g. 30s, 5m, default is 1m
   deadline: 1m
 

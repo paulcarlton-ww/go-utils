@@ -1,13 +1,13 @@
 package testutils
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 	"strings"
 	"testing"
-
-	"github.com/paul-carlton/go-utils/pkg/goutils"
 )
 
 // Test utilities
@@ -130,9 +130,24 @@ func DisplayStrings(strs []string) string {
 	return output
 }
 
+// ToJSON is used to convert a data structure into JSON format.
+// nolint godox ToDo address circular depencancies with internal/common and remove this
+func ToJSON(data interface{}) (string, error) {
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		return "", err
+	}
+	var prettyJSON bytes.Buffer
+	err = json.Indent(&prettyJSON, jsonData, "", "\t")
+	if err != nil {
+		return "", err
+	}
+	return prettyJSON.String(), nil
+}
+
 // GetTestJSON returns json representation of an interface or sets test error if it fails
 func GetTestJSON(t *testing.T, data interface{}) string {
-	jsonResp, err := goutils.ToJSON(data)
+	jsonResp, err := ToJSON(data)
 	if err != nil {
 		t.Errorf("failed to convert data: %+v to json, %s", data, err)
 	}
