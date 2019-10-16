@@ -30,6 +30,13 @@ type (
 		ReportFunc ReportTestI // Function to be called to report test results,
 		// leave unset to call default - which reports input, actual and expected as strings
 	}
+
+	// ResultsErr is used to hold one or more return value and an error
+	ResultsErr struct {
+		Items   uint8         // Number of Results
+		Results []interface{} // Items returned
+		Err     error         // Error returned
+	}
 )
 
 var (
