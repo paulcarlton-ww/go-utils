@@ -2,7 +2,7 @@
 FROM pcarlton/go-builder:0.0.2 as builder
 
 ARG VERSION
-WORKDIR /go/src/github.com/paul-carlton/go-utils
+WORKDIR /go/src/github.com/paulcarlton-ww/go-utils
 COPY . .
 #ENV GOPROXY=direct
 RUN make build

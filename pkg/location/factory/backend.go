@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/paul-carlton/go-utils/pkg/location"
-	"github.com/paul-carlton/go-utils/pkg/location/memory"
+	"github.com/paulcarlton-ww/go-utils/pkg/location"
+	"github.com/paulcarlton-ww/go-utils/pkg/location/memory"
 )
 
 // SelectHandler returns the appropriate location

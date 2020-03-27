@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/paul-carlton/go-utils/pkg/internal/common"
+	"github.com/paulcarlton-ww/go-utils/pkg/internal/common"
 )
 
 // JSONtext generates a string containing a json representation of an interface

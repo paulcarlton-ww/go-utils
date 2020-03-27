@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/paul-carlton/go-utils/pkg/location"
+	"github.com/paulcarlton-ww/go-utils/pkg/location"
 )
 
 const memoryHandler = "memory"

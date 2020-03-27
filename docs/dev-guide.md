@@ -1,21 +1,15 @@
 # Developers Guide
 
-This repository is intended to contain testing and development utilities as well as library code for use
-with golang and python. To run tests and build any executables (non at present) type 'make' in top level
-directory of the repository. This will also install any software you need on your workstation.
+This repository is intended to contain testing and development utilities as well as library code for use with golang and python. To run tests and build any executables (non at present) type 'make' in top level directory of the repository. This will also install any software you need on your workstation.
 
 ## Setup
 
-clone into $GOPATH/src/github.com/paul-carlton/go-utils:
+clone into $GOPATH/src/github.com/paulcarlton-ww/go-utils:
 
-    cd $GOPATH/src/github.com/paul-carlton
-    git clone git@github.com:paul-carlton/go-utils.git
+    mkdir -p $GOPATH/src/github.com/paulcarlton-ww
+    cd $GOPATH/src/github.com/paulcarlton-ww
+    git clone git@github.com:paulcarlton-ww/go-utils.git
     cd go-utils
-
-Optionally install required software versions in project's bin directory:
-
-    . bin/env.sh
-    setup.sh
 
 This project requires the following software:
 
@@ -28,7 +22,7 @@ You can install these in the project bin directory using the 'setup.sh' script:
     . bin/env.sh
     setup.sh
 
-The setup.sh script can safely be run at any time. It installs the required software in the <project-dir>bin/local.
+The setup.sh script can safely be run at any time. It installs the required software in the $GOPATH/bin/`<project-org>`/`<project-name>` directory, where `<project-org>` is the git organisation name and `<project-name>` is the git respository name, i.e. `paulcarlton-ww`/`go-utils`
 
 ## Development
 

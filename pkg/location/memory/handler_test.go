@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/paul-carlton/go-utils/pkg/location"
-	"github.com/paul-carlton/go-utils/pkg/testutils"
+	"github.com/paulcarlton-ww/go-utils/pkg/location"
+	"github.com/paulcarlton-ww/go-utils/pkg/testutils"
 )
 
 const testPath = "memory:///secret/services/ms/ALL/ms/mgmtsvc/mgmt/test1"

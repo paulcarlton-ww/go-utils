@@ -13,8 +13,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/paul-carlton/go-utils/pkg/goutils"
-	"github.com/paul-carlton/go-utils/pkg/location"
+	"github.com/paulcarlton-ww/go-utils/pkg/goutils"
+	"github.com/paulcarlton-ww/go-utils/pkg/location"
 )
 
 const (

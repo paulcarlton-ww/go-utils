@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/paul-carlton/go-utils/pkg/testutils"
+	"github.com/paulcarlton-ww/go-utils/pkg/testutils"
 )
 
 func TestCallers(t *testing.T) {
@@ -23,12 +23,12 @@ func TestCallers(t *testing.T) {
 	var tests = []callerInfo{
 		{testNum: 1, levels: 10, short: false, expected: []string{
 			fmt.Sprintf("%s%s%s",
-				"github.com/paul-carlton/go-utils/pkg/internal/common.Callers() - ", filepath.Dir(pwd),
+				"github.com/paulcarlton-ww/go-utils/pkg/internal/common.Callers() - ", filepath.Dir(pwd),
 				"/internal/common/misc_utils.go(NN)"),
 			fmt.Sprintf("%s%s%s",
-				"github.com/paul-carlton/go-utils/pkg/goutils.Callers() - ", pwd, "/misc_utils.go(NN)"),
+				"github.com/paulcarlton-ww/go-utils/pkg/goutils.Callers() - ", pwd, "/misc_utils.go(NN)"),
 			fmt.Sprintf("%s%s%s",
-				"github.com/paul-carlton/go-utils/pkg/goutils.TestCallers() - ", pwd, "/misc_utils_test.go(NN)")}},
+				"github.com/paulcarlton-ww/go-utils/pkg/goutils.TestCallers() - ", pwd, "/misc_utils_test.go(NN)")}},
 		{testNum: 2, levels: 10, short: true, expected: []string{
 			"common.Callers() - misc_utils.go(NN)",
 			"goutils.Callers() - misc_utils.go(NN)",
@@ -64,7 +64,7 @@ func TestGetCaller(t *testing.T) {
 	}
 	var tests = []callerInfo{
 		{testNum: 1, skip: 1, short: false,
-			expected: fmt.Sprintf("github.com/paul-carlton/go-utils/pkg/internal/common.GetCaller() "+
+			expected: fmt.Sprintf("github.com/paulcarlton-ww/go-utils/pkg/internal/common.GetCaller() "+
 				"- %s/internal/common/misc_utils.go(NN)", filepath.Dir(pwd))},
 		{testNum: 2, skip: 1, short: true,
 			expected: "common.GetCaller() - misc_utils.go(NN)"},
