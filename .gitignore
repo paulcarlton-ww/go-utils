@@ -6,3 +6,4 @@ pkg/**/coverage/
 pkg/**/*.md
 vendor/
 **/._shellcheck
+*.code-workspace
