@@ -1,6 +1,6 @@
 # Developers Guide
 
-This repository is intended to contain testing and development utilities as well as library code for use with golang and python. To run tests and build any executables (non at present) type 'make' in top level directory of the repository. This will also install any software you need on your workstation.
+This repository is intended to contain testing and development utilities as well as library code for use with golang. To run tests and build any executables (non at present) type 'make' in top level directory of the repository. This will also install any software you need on your workstation.
 
 ## Setup
 

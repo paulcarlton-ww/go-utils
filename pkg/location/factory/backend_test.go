@@ -1,4 +1,4 @@
-package factory
+package factory // nolint:testpackage // Prefer test in package
 
 import (
 	"fmt"
@@ -15,6 +15,7 @@ func TestSelectHandlerErrors(t *testing.T) {
 	if err != nil {
 		t.Errorf("SelectHandler failed, %s", err)
 	}
+
 	if l.Scheme() != memoryHandler {
 		t.Errorf("Got %s", l.Scheme())
 	}
@@ -26,7 +27,7 @@ func TestSelectHandlerErrors(t *testing.T) {
 	}
 
 	// First run a generic compare
-	expected := fmt.Errorf("%s: something", location.ErrorNotImplemented)
+	expected := fmt.Errorf("%s: something", location.ErrorNotImplemented) //nolint:goerr113 // ?
 	if !strings.Contains(err.Error(), expected.Error()) {
 		t.Errorf("Expected %s but got %s", location.ErrorNotImplemented, err)
 	}
@@ -43,6 +44,7 @@ func TestSelectHandlerSchemes(t *testing.T) {
 	if err != nil {
 		t.Errorf("SelectHandler failed, %s", err)
 	}
+
 	if l.Scheme() != memoryHandler {
 		t.Errorf("Expected: vault Got:%s", l.Scheme())
 	}

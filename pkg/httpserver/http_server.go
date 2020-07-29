@@ -17,7 +17,7 @@ const (
 	ContentType = "Content-Type"
 )
 
-// HandlerHTTP is a type defining a structure used to manage HTTP server setup and request handling
+// HandlerHTTP is a type defining a structure used to manage HTTP server setup and request handling.
 type HandlerHTTP struct {
 	Address    string
 	ListenPort int
@@ -26,15 +26,15 @@ type HandlerHTTP struct {
 	Server     *http.Server
 }
 
-// MuxHTTP is a type defining a map of pathnames to functions for handling incoming http requests
+// MuxHTTP is a type defining a map of pathnames to functions for handling incoming http requests.
 type MuxHTTP map[string]func(http.ResponseWriter, *http.Request) (int, string)
 
-// GetServer
+// GetServer is not yet implemented.
 func (handler *HandlerHTTP) GetServer() {
 
 }
 
-// ServeHTTP serves incomming HTTP requests, used by secmgr
+// ServeHTTP serves incomming HTTP requests.
 func (handler *HandlerHTTP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Infof("Incoming request: %s", r.URL.String())
 	reqLine := r.URL.String()
@@ -57,10 +57,12 @@ func (handler *HandlerHTTP) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, fmt.Sprintf("unrecognised request %s", ThePath), http.StatusBadRequest)
 }
 
+// Start starts the HTTP listener.
 func (handler *HandlerHTTP) Start(handlers *MuxHTTP) {
 	go serveHTTP(*handler)
 }
 
+// Shutdown stops the HTTP listener.
 func (handler *HandlerHTTP) Shutdown() {
 	handler.C <- "0"
 }
@@ -98,7 +100,7 @@ func (ln tcpKeepAliveListener) Accept() (net.Conn, error) {
 	return tc, nil
 }
 
-// serveHTTP sets up an HTTP server to listen for incoming requests
+// serveHTTP sets up an HTTP server to listen for incoming requests.
 func serveHTTP(handler HandlerHTTP) {
 	server := http.Server{
 		ReadHeaderTimeout: 10 * time.Second,
@@ -123,6 +125,7 @@ func serveHTTP(handler HandlerHTTP) {
 	handler.C <- "how did I get here!"
 }
 
+// JSONresponse sends a json response.
 func JSONresponse(w http.ResponseWriter, jsonResp string) (int, string) {
 	w.Header().Set(ContentType, AppJSON)
 	_, err := io.WriteString(w, jsonResp)

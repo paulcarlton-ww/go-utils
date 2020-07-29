@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	tr *http.Transport // nolint gochecknoglobals
+	tr *http.Transport // nolint:gochecknoglobals // Global required
 )
 
 const (
@@ -23,7 +23,7 @@ const (
 	Get    = "GET"
 )
 
-func init() { // nolint init
+func init() { // nolint:init // Innit required
 	tr = &http.Transport{ //Proxy: http.ProxyFromEnvironment,
 		MaxIdleConns:        100,
 		MaxIdleConnsPerHost: 100}
@@ -51,9 +51,9 @@ type ReqResp struct {
 	HeaderFields Header
 }
 
-// ReqResp Methods
+// ReqResp Methods.
 
-// CloseBody closes the response body
+// CloseBody closes the response body.
 func (r *ReqResp) CloseBody() {
 	if r.Resp != nil {
 		if r.Resp.Body != nil {
@@ -65,8 +65,8 @@ func (r *ReqResp) CloseBody() {
 	}
 }
 
-// HTTPreq creates an HTTP client and sends a request. The response is held in ReqResp.RespText
-func (r *ReqResp) HTTPreq() error { // nolint gocyclo
+// HTTPreq creates an HTTP client and sends a request. The response is held in ReqResp.RespText.
+func (r *ReqResp) HTTPreq() error { // nolint:gocyclo,funlen,gocognit // suppress
 	var err error
 
 	if len(r.Method) == 0 {
@@ -120,8 +120,9 @@ func (r *ReqResp) HTTPreq() error { // nolint gocyclo
 	retries := 30
 	seconds := 1
 	start := time.Now()
+
 	for {
-		r.Resp, err = r.Cli.Do(httpReq) // nolint bodyclose
+		r.Resp, err = r.Cli.Do(httpReq) // nolint:bodyclose // False positive I think
 		if err != nil {
 			if strings.Contains(err.Error(), "connection refused") ||
 				strings.Contains(err.Error(), "http2: no cached connection was available") ||
@@ -156,10 +157,14 @@ func (r *ReqResp) HTTPreq() error { // nolint gocyclo
 // GetRespBody is used to return the HTTPS response body as a string.
 func (r *ReqResp) GetRespBody() error {
 	defer r.Resp.Body.Close()
+
 	data, err := ioutil.ReadAll(r.Resp.Body)
+
 	if err != nil {
 		return fmt.Errorf("error reading resp: %s", err)
 	}
+
 	r.RespText = string(data)
+
 	return nil
 }

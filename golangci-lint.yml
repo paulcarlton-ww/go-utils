@@ -183,9 +183,21 @@ issues:
 
   # Excluding configuration per-path, per-linter, per-text and per-source
   exclude-rules:
-    - path: pkg/generated/restapi/v1/configure_rda_client.go
+    - path: pkg/httpclient
       linters:
-        - lll
+        - wsl
+        - goerr113
+        - gomnd
+        - nestif
+    - path: pkg/httpserver
+      linters:
+        - wsl
+        - goerr113
+        - gomnd
+    - path: pkg/location/memory
+      linters:
+        - wsl
+        - goerr113
 
 
   # Independently from option `exclude` we use default exclude patterns,

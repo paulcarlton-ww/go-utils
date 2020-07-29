@@ -1,7 +1,8 @@
-package testutils
+package testutils // nolint:testpackage // Prefer test in package
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"testing"
 )
@@ -35,11 +36,14 @@ func TestReadBuf(t *testing.T) {
 	var tests = []struct {
 		expected *[]string
 	}{{&[]string{"b", "c", "d"}}}
+
 	for _, test := range tests {
 		buffer := &bytes.Buffer{}
+
 		for _, input := range *test.expected {
 			buffer.WriteString(fmt.Sprintf("%s\n", input))
 		}
+
 		result := ReadBuf(buffer)
 		if !ContainsStringArray(*result, *test.expected, true) || FailTests {
 			t.Errorf("\nExpected:\n%+v\nGot.....:\n%+v", test.expected, result)
@@ -134,10 +138,12 @@ func TestCompareItems(t *testing.T) {
 		two      interface{}
 		expected bool
 	}
+
 	type subData struct {
 		S string
 		A []int
 	}
+
 	type testData struct {
 		B bool
 		I int
@@ -147,10 +153,14 @@ func TestCompareItems(t *testing.T) {
 		subData
 	}
 
+	var errAnError = errors.New("an error") // nolint:err113 // ?
+
+	var errDifferentError = errors.New("a different error") // nolint:err113 // ?
+
 	var tests = []TestInfo{
 		{testNum: 1, one: 1, two: 2, expected: false},
 		{testNum: 2, one: 1, two: 1, expected: true},
-		{testNum: 5, one: testData{B: true, I: 1, F: 12.43, // nolint duplicate
+		{testNum: 5, one: testData{B: true, I: 1, F: 12.43, // nolint:dupl // False positive
 			X:       subData{S: "interface"},
 			E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 			subData: subData{S: "embedded", A: []int{9, 8, 7}}},
@@ -158,7 +168,7 @@ func TestCompareItems(t *testing.T) {
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 				subData: subData{S: "embedded", A: []int{9, 11, 7}}}, expected: false},
-		{testNum: 6, one: testData{B: true, I: 1, F: 12.43, // nolint duplicate
+		{testNum: 6, one: testData{B: true, I: 1, F: 12.43, // nolint:dupl // False positive
 			X:       subData{S: "interface"},
 			E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 			subData: subData{S: "embedded", A: []int{9, 8, 7}}},
@@ -168,8 +178,8 @@ func TestCompareItems(t *testing.T) {
 				subData: subData{S: "embedded", A: []int{9, 8, 7}}}, expected: true},
 		{testNum: 7, one: "one", two: "two", expected: false},
 		{testNum: 8, one: "one", two: "one", expected: true},
-		{testNum: 8, one: fmt.Errorf("an error"), two: fmt.Errorf("a different error"), expected: false},
-		{testNum: 10, one: fmt.Errorf("an error"), two: fmt.Errorf("an error"), expected: true}}
+		{testNum: 8, one: errAnError, two: errDifferentError, expected: false},
+		{testNum: 10, one: errAnError, two: errAnError, expected: true}}
 
 	for _, test := range tests {
 		result := CompareItems(test.one, test.two)

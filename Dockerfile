@@ -1,5 +1,4 @@
-
-FROM pcarlton/go-builder:0.0.2 as builder
+FROM golang:1.14 as builder
 
 ARG VERSION
 WORKDIR /go/src/github.com/paulcarlton-ww/go-utils

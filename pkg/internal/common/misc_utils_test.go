@@ -1,12 +1,16 @@
-package common
+package common // nolint:testpackage // Prefer test in package
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"testing"
 
 	"github.com/paulcarlton-ww/go-utils/pkg/testutils"
 )
+
+// ErrInvalidJSON is an error returned when json data is invalid.
+var ErrInvalidJSON = errors.New("unexpected end of JSON input")
 
 func TestCallers(t *testing.T) {
 	type callerInfo struct {
@@ -15,10 +19,12 @@ func TestCallers(t *testing.T) {
 		short    bool
 		expected []string
 	}
+
 	pwd, err := os.Getwd()
 	if err != nil {
 		t.Errorf("failed to get current directory: %s", err)
 	}
+
 	var tests = []callerInfo{
 		{testNum: 1, levels: 10, short: false, expected: []string{
 			fmt.Sprintf("%s%s%s",
@@ -39,7 +45,9 @@ func TestCallers(t *testing.T) {
 		if err != nil {
 			t.Errorf("%s", err)
 		}
+
 		callers = testutils.RemoveBottom(callers)
+
 		if !testutils.CompareWhereList(test.expected, callers) || testutils.FailTests {
 			t.Errorf("\nTest: %d\nExpected:\n%s\nGot:\n%s", test.testNum,
 				testutils.DisplayStrings(test.expected), testutils.DisplayStrings(callers))
@@ -54,10 +62,12 @@ func TestGetCaller(t *testing.T) {
 		short    bool
 		expected string
 	}
+
 	pwd, err := os.Getwd()
 	if err != nil {
 		t.Errorf("failed to get current directory: %s", err)
 	}
+
 	var tests = []callerInfo{
 		{testNum: 1, skip: 1, short: false,
 			expected: fmt.Sprintf(
@@ -87,6 +97,7 @@ func TestToJSON(t *testing.T) {
 		object   interface{}
 		expected string
 	}
+
 	var tests = []TestInfo{{object: []string{"one", "two"}, expected: "[\n\t\"one\",\n\t\"two\"\n]"},
 		{object: "one", expected: "\"one\""},
 		{object: map[string]string{"1": "one", "2": "two"}, expected: "{\n\t\"1\": \"one\",\n\t\"2\": \"two\"\n}"},
@@ -99,6 +110,7 @@ func TestToJSON(t *testing.T) {
 		if err != nil {
 			t.Errorf(err.Error())
 		}
+
 		if json != test.expected || testutils.FailTests {
 			t.Errorf("\nExpected:\n%s\nGot....:\n%s", test.expected, json)
 		}
@@ -130,7 +142,7 @@ func TestFindInStringSlice(t *testing.T) {
 	}
 }
 
-func TestCompareAsJSON(t *testing.T) {
+func TestCompareAsJSON(t *testing.T) { //nolint:funlen // ok
 	type TestInfo struct {
 		testNum  int
 		objects  []interface{}
@@ -141,6 +153,7 @@ func TestCompareAsJSON(t *testing.T) {
 		S string
 		A []int
 	}
+
 	type testData struct {
 		B bool
 		I int
@@ -155,7 +168,7 @@ func TestCompareAsJSON(t *testing.T) {
 		{testNum: 2, objects: []interface{}{"one", "one"}, expected: true},
 		{testNum: 3, objects: []interface{}{1, 2}, expected: false},
 		{testNum: 4, objects: []interface{}{1, 1}, expected: true},
-		{testNum: 5, objects: []interface{}{ // nolint duplicate
+		{testNum: 5, objects: []interface{}{ // nolint:dupl // False positive
 			testData{B: true, I: 1, F: 12.43,
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
@@ -164,7 +177,7 @@ func TestCompareAsJSON(t *testing.T) {
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
 				subData: subData{S: "embedded", A: []int{9, 11, 7}}}}, expected: false},
-		{testNum: 6, objects: []interface{}{ // nolint duplicate
+		{testNum: 6, objects: []interface{}{ // nolint:dupl // False positive
 			testData{B: true, I: 1, F: 12.43,
 				X:       subData{S: "interface"},
 				E:       subData{S: "sub struct", A: []int{1, 2, 3}},
@@ -182,10 +195,13 @@ func TestCompareAsJSON(t *testing.T) {
 			if err != nil {
 				t.Errorf("failed to convert test data to json, %s", err)
 			}
+
 			twoJSON, err := ToJSON(test.objects[1])
+
 			if err != nil {
 				t.Errorf("failed to convert test data to json, %s", err)
 			}
+
 			t.Errorf("Test: %d\nExpected:\n%t\nGot....:\n%t\nInput Data:\n%s\n%s\n",
 				test.testNum, result, test.expected, oneJSON, twoJSON)
 		}
@@ -230,7 +246,7 @@ func TestPrettyJSON(t *testing.T) {
 	}
 
 	var tests = []TestInfo{
-		{testNum: 1, input: "", expected: expected{"", fmt.Errorf("unexpected end of JSON input")}},
+		{testNum: 1, input: "", expected: expected{"", ErrInvalidJSON}},
 		{testNum: 2, input: "{\"key\":\"data\"}", expected: expected{"{\n\t\"key\": \"data\"\n}", nil}}}
 
 	for _, test := range tests {

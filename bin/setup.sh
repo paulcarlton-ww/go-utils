@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Set versions of software required
-linter_version=1.19.1
-golang_version=1.13.1
+linter_version=1.27.0
+golang_version=1.14.3
 
 function usage()
 {

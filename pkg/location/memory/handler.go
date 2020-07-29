@@ -1,11 +1,9 @@
-// nolint typecheck
 // Package memory implements a location handler interface that uses
 // a memory backend and can be instantiated by calling
 // core/location/factory.SelectHandler
 // with a URI that contains 'memory://" scheme.
 // Required fields in the URI:
 // Scheme: should be equal to "memory"
-
 package memory
 
 import (
@@ -18,53 +16,53 @@ import (
 )
 
 const (
-	// HandlerScheme The scheme for the memory handler
+	// HandlerScheme The scheme for the memory handler.
 	HandlerScheme string = "memory"
-	// HandlerID The ID for the memory handler
+	// HandlerID The ID for the memory handler.
 	HandlerID string = "memory location handler"
 
-	// ErrorConnectFail Failed to connect to memory
+	// ErrorConnectFail Failed to connect to memory.
 	ErrorConnectFail string = "failed to connect to memory"
 )
 
-// implements a Location interface
+// Implements a Location interface.
 type memory struct {
 	data
 }
 
-var v memory // nolint gochecknoglobals
+var v memory // nolint:gochecknoglobals // ok
 
 type data map[string]interface{}
 
-// PathInfo holds information about path contents
+// PathInfo holds information about path contents.
 type PathInfo struct {
 	Path     string   `json:"path"`
 	PathList []string `json:"subpath-list"`
 	ItemList []string `json:"item-list"`
 }
 
-// Init initializes
+// Init initializes.
 func (pathInfo *PathInfo) Init() {
 	pathInfo.ItemList = []string{}
 	pathInfo.PathList = []string{}
 }
 
-// ID id
+// ID id.
 func (memory *memory) ID() string {
 	return HandlerID
 }
 
-// Scheme scheme
+// Scheme scheme.
 func (memory *memory) Scheme() string {
 	return HandlerScheme
 }
 
-//GetHandler A factory method to return a memory handler object
+//GetHandler A factory method to return a memory handler object.
 func GetHandler() (location.Handler, error) {
 	return &v, nil
 }
 
-// VerifyScheme verify scheme
+// VerifyScheme verify scheme.
 func (memory *memory) VerifyScheme(uri string) error {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
@@ -77,7 +75,7 @@ func (memory *memory) VerifyScheme(uri string) error {
 	return nil
 }
 
-// getSession resuses an existing session or gets a new one
+// getSession resuses an existing session or gets a new one.
 func (memory *memory) getSession(uri string) (data, error) {
 	if err := memory.VerifyScheme(uri); err != nil {
 		return nil, err
@@ -103,7 +101,7 @@ func (memory *memory) Connect(uri string) error {
 	return nil
 }
 
-// list returns PathInfo for the supplied path in the memory store
+// list returns PathInfo for the supplied path in the memory store.
 func list(data *data, path string) *PathInfo {
 	pathInfo := &PathInfo{}
 	pathInfo.Init()
@@ -127,7 +125,7 @@ func list(data *data, path string) *PathInfo {
 	return pathInfo
 }
 
-// ListData lists data at uri from the memory backend
+// ListData lists data at uri from the memory backend.
 func (memory *memory) ListData(uri string) ([]string, error) {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
@@ -142,7 +140,7 @@ func (memory *memory) ListData(uri string) ([]string, error) {
 	return list(&session, uriParts.Path).ItemList, nil
 }
 
-// DeleteData deletes data for a uri from the memory backend
+// DeleteData deletes data for a uri from the memory backend.
 func (memory *memory) DeleteData(uri string) error {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
@@ -162,7 +160,7 @@ func (memory *memory) DeleteData(uri string) error {
 	return nil
 }
 
-// GetData returns data for a uri from the memory backend
+// GetData returns data for a uri from the memory backend.
 func (memory *memory) GetData(uri string) (interface{}, error) {
 	uriParts, err := url.Parse(uri)
 	if err != nil {
@@ -181,7 +179,7 @@ func (memory *memory) GetData(uri string) (interface{}, error) {
 	return nil, fmt.Errorf("no data at: %s", uriParts.Path)
 }
 
-// PutData sets data value for a uri into the memory backend
+// PutData sets data value for a uri into the memory backend.
 func (memory *memory) PutData(uri string, data interface{}) error {
 	uriParts, err := url.Parse(uri)
 	if err != nil {

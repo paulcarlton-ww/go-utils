@@ -1,4 +1,4 @@
-package memory
+package memory // nolint:testpackage // Prefer test in package
 
 import (
 	"fmt"
@@ -85,7 +85,7 @@ func TestMemoryLocationHandler_PutGetData(t *testing.T) {
 	}
 }
 
-func TestGetData(t *testing.T) { // nolint funlen
+func TestGetData(t *testing.T) { // nolint:funlen // ok
 	type expected struct {
 		result interface{}
 		err    error
